@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  inflation-prediction:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    environment:
+      - LLM_BACKEND=mock
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./inflation_prediction_output:/app/inflation_prediction_output
+      - ./public:/app/public
+    ports:
+      - "8000:8000"
+    command: python -m src.inflation_prediction.main_orchestrator
+
+  # Optional: Simple HTTP server to serve dashboard
+  web-server:
+    image: nginx:alpine
+    volumes:
+      - ./public:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - inflation-prediction
