@@ -1,6 +1,6 @@
 # 🎯 AI-Driven Inflation Prediction System with Interactive Simulation
 
-**Status**: ✅ **COMPLETE & OPERATIONAL**  
+**Status**: ✅ **COMPLETE & OPERATIONAL**
 **Version**: 3.0 (Production Release)
 
 ---
@@ -25,16 +25,75 @@ python -m http.server 8000
 ## 📊 What You'll See
 
 ### Dashboard Components:
-1. **Prediction Metrics** - Inflation forecast (3.08% shown) with accuracy indicators
-2. **Historical Chart** - 12-month trend + 1-month forecast
+1. **Prediction Metrics** - Inflation forecast with accuracy indicators
+2. **Historical Chart** - Historical trend + forecast horizon
 3. **Feature Importance** - Which factors drive the prediction most
-4. **Interactive Simulator** - 4 sliders to test "what-if" scenarios in real-time
+4. **Interactive Simulator** - Sliders to test "what-if" scenarios in real-time
 5. **Government Analysis** - LLM-generated policy recommendations
 
 ### Color Coding:
 - 🟢 **Green** (< 2.5%): Low inflation ✓
 - 🟡 **Yellow** (2.5-4%): Moderate inflation ✓ (within BI target)
 - 🔴 **Red** (> 4%): High inflation ⚠️
+
+---
+
+## 🧮 Forecasting Methodology
+
+Before reaching the dashboard, every macroeconomic variable is forecasted individually using classical time-series approaches. These per-variable forecasts form the foundation of the feature set that is later combined and surfaced in the dashboard.
+
+### Variables Forecasted
+
+| Variable | Data Source | Model |
+|---|---|---|
+| **Liquidity (M2 / Money Supply)** | `data_liquidity.jsonl` | ARIMA (direct & iterative forecast) |
+| **Exchange Rate (USD/IDR)** | Historical monthly data | ARIMA, cross-validated with VAR (Exchange Rate ↔ CPI) |
+| **CPI per Commodity** (Shallot, Rice, Chili, etc.) | `ihk_results.jsonl` | ARIMA per category |
+| **BI Rate / BI-7Day Reverse Repo Rate** | PostgreSQL database (`data_bi`) | ARIMA with linear trend, evaluated via train-test split |
+| **News & Social Media Sentiment** | Monthly sentiment data (negative/positive/total) | Normalized into an index, paired with CPI via VAR |
+
+![Liquidity M2](./image/liquidity-data.png)
+*Liquidity trend (M2 / Money Supply) from historical data*
+
+![Exchange Rate](./image/exchangerate.png)
+*USD/IDR exchange rate forecast using ARIMA*
+
+![BI Rate](./image/birate.png)
+*BI Rate / BI-7Day Reverse Repo Rate forecast*
+
+![CPI Forecast](./image/ihkforecast.png)
+*CPI forecast per food commodity category*
+
+![All Variables](./image/all-variable.png)
+*Summary of all supporting variables used as inflation prediction features*
+
+### Time-Series Modeling Approach
+- **ARIMA (univariate)** — used for M2, exchange rate, BI rate, and CPI per commodity, with the `(p,d,q)` order tuned per variable.
+- **3 forecasting strategies compared**:
+  - *Direct forecast* — model fitted once, forecasting 12 months ahead directly.
+  - *Iterative/recursive forecast* — each month, the previous prediction is fed back in as new data and the model is re-fitted (rolling re-fit) to forecast the next month.
+  - *Train-test split* — performance evaluated before forecasting forward, using MAE/MSE/RMSE.
+- **VAR (multivariate)** — captures relationships between variables simultaneously, e.g. exchange rate ↔ CPI, and normalized sentiment ↔ CPI per commodity. Optimal lag selected automatically via AIC.
+
+### Predicted vs Actual Inflation
+
+![Inflation Prediction Result 1](./image/inflation-1.png)
+
+![Inflation Prediction Result 2](./image/inflation-2.png)
+
+![Inflation Prediction Result 3](./image/inflation-3.png)
+
+### Model Evaluation
+
+| Metric | Value |
+|---|---|
+| **MAE** (Mean Absolute Error) | 0.22562 |
+| **MSE** (Mean Squared Error) | 0.10171 |
+| **RMSE** (Root Mean Squared Error) | 0.31891 |
+
+An RMSE of ±0.32 means the average deviation between predicted and actual inflation sits around 0.3 percentage points — fairly tight for a monthly macroeconomic indicator.
+
+> Note: the output of each per-variable model above becomes an *input feature* that is later combined in the pipeline (`model_training.py`) to produce a single final inflation prediction, which is what's shown on the dashboard.
 
 ---
 
@@ -54,7 +113,7 @@ Result: Inflation prediction rises (import costs pass through)
 
 ### Scenario 3: Sentiment Recovery
 ```
-Action: Drag both sentiment sliders to +0.7
+Action: Drag both sentiment sliders (news & social media) to +0.7
 Result: Inflation prediction drops (confidence effect)
 ```
 
@@ -69,6 +128,16 @@ inflation-prediction/
 │
 ├── 🌟 index.html (MAIN OUTPUT - Open this in browser!)
 │
+├── 🖼️ image/ (forecast charts per variable)
+│   ├── all-variable.png
+│   ├── birate.png
+│   ├── exchangerate.png
+│   ├── ihkforecast.png
+│   ├── inflation-1.png
+│   ├── inflation-2.png
+│   ├── inflation-3.png
+│   └── liquidity-data.png
+│
 ├── 📚 DOCUMENTATION
 │   ├── README.md (this file)
 │   ├── QUICK_START.md (60-second guide)
@@ -79,7 +148,7 @@ inflation-prediction/
 │
 ├── 🐍 PYTHON MODULES (5 Phases)
 │   ├── data_ingestion.py (Phase 1: Data collection)
-│   ├── llm_sentiment_pipeline.py (Phase 2: NLP analysis)
+│   ├── llm_sentiment_pipeline.py (Phase 2: NLP analysis - news & social media)
 │   ├── model_training.py (Phase 3: ML model)
 │   ├── llm_government_insights.py (Phase 4: Policy reports)
 │   ├── html_factory.py (Phase 5: Dashboard generation)
@@ -104,22 +173,25 @@ inflation-prediction/
 
 ## 🏗️ System Architecture (5 Phases)
 
+### **Phase 0: Per-Variable Time-Series Forecasting**
+- Forecasts each macroeconomic variable individually (M2, exchange rate, BI rate, CPI, sentiment) using ARIMA & VAR.
+- The output of this phase becomes the *historical + forecasted features* used in Phase 1.
+
 ### **Phase 1: Data Ingestion Engine**
 - Scrapes Bank Indonesia inflation data
 - Integrates Yahoo Finance for USD/IDR rates
 - Aggregates news & social media text by month
-- Outputs: 36-month unified feature matrix
 
 ### **Phase 2: LLM-Driven Sentiment Analysis**
-- Batches monthly text data
+- Batches monthly text data from **news** and **social media** separately
 - Routes through LLM (OpenAI/Anthropic/HuggingFace/Mock)
-- Outputs continuous sentiment scores [-1.0, +1.0]
+- Outputs continuous sentiment scores [-1.0, +1.0] for each source
 - **No hardcoded rules—100% LLM analysis**
 
-### **Phase 3: Random Forest Modeling**
-- Trains model on 6 features to predict next month inflation
+### **Phase 3: Model Training**
+- Combines all features (per-variable forecasts + news sentiment + social media sentiment) to predict next month's inflation
 - **TimeSeriesSplit validation** (prevents data leakage)
-- Achieves **R² = 0.892** (89% variance explained)
+- Evaluation: MAE 0.22562, MSE 0.10171, RMSE 0.31891
 - Exports linear approximation for JavaScript
 
 ### **Phase 4: Government Insights Generator**
@@ -129,24 +201,10 @@ inflation-prediction/
 - Outputs structured government report
 
 ### **Phase 5: Standalone HTML Dashboard**
-- Single file (24 KB), fully self-contained
+- Single file, fully self-contained
 - Embedded data + Tailwind CSS + Chart.js
-- **Interactive 4-slider simulator engine**
+- **Interactive slider simulator engine**
 - Client-side JavaScript (no server calls)
-
----
-
-## 📈 Key Metrics
-
-| Metric | Value |
-|--------|-------|
-| **Prediction** | 3.08% (within BI target) |
-| **Model Accuracy (R²)** | 0.892 (excellent) |
-| **Confidence (RMSE)** | ±0.249% |
-| **Historical Data** | 36 months |
-| **Features** | 6 predictors + sentiment |
-| **Dashboard Size** | 24 KB (fully self-contained) |
-| **Execution Time** | ~30 seconds (full pipeline) |
 
 ---
 
@@ -154,14 +212,14 @@ inflation-prediction/
 
 What drives inflation predictions most?
 
-1. **Historical Inflation**: 78.4% (momentum effect)
-2. **Social Media Sentiment**: 16.4% (public expectations)
-3. **News Sentiment**: 2.7% (media narrative)
-4. **IHK Index**: 0.9%
-5. **BI Rate**: 0.8%
-6. **Exchange Rate**: 0.8%
+1. **Historical Inflation** (momentum effect)
+2. **Social Media Sentiment** (public expectations)
+3. **News Sentiment** (media narrative)
+4. **CPI Index**
+5. **BI Rate**
+6. **Exchange Rate**
 
-**Insight**: Historical inflation is most predictive (78%), followed by public sentiment (16%).
+**Insight**: Historical inflation is the most dominant driver, followed by public sentiment (combined news & social media).
 
 ---
 
@@ -173,7 +231,7 @@ cd ./
 
 # Packages already installed in .venv
 # To reinstall:
-pip install numpy pandas scikit-learn yfinance beautifulsoup4 requests
+pip install numpy pandas scikit-learn statsmodels yfinance beautifulsoup4 requests
 ```
 
 ### 2. Execute Pipeline
@@ -181,17 +239,7 @@ pip install numpy pandas scikit-learn yfinance beautifulsoup4 requests
 ./.venv/bin/python main_orchestrator.py
 ```
 
-### 3. Expected Output
-```
-================================================================================
-EXECUTION SUMMARY
-================================================================================
-Status: ✓ SUCCESS
-Next Month Inflation Prediction: 3.08%
-Dashboard: inflation_prediction_output/index.html
-```
-
-### 4. View Results
+### 3. View Results
 ```bash
 # Dashboard is automatically copied to:
 # ./index.html
@@ -231,16 +279,10 @@ export ANTHROPIC_API_KEY="sk-ant-your-key"
 
 ## 📊 Interpreting Results
 
-### Prediction Output (3.08%)
-- Falls within BI target corridor (3% ± 1%)
-- No urgent policy action required
-- Fiscal subsidy requirements remain moderate
-- Purchasing power effects minimal
-
-### Model Accuracy (R² = 0.892)
-- 89% of inflation variation explained
-- Very reliable for policy simulation
-- Can be used for government decision support
+### Model Accuracy
+- **MAE**: 0.22562 — average absolute difference between predicted and actual values (in inflation percentage points)
+- **MSE**: 0.10171 — average squared error, more sensitive to outliers
+- **RMSE**: 0.31891 — square root of MSE, in the same unit as inflation (%)
 
 ### Simulation Panel
 - **Green badge**: Use if inflation is rising to test rate hike effects
@@ -258,10 +300,13 @@ self.theme_color = "#1e3a8a"  # Change to your color
 ```
 
 ### Change Historical Data Window
-Edit `main_orchestrator.py` line 304:
+Edit `main_orchestrator.py`:
 ```python
 orchestrator = InflationPredictionOrchestrator(months=60)  # 5 years instead of 3
 ```
+
+### Tune Per-Variable ARIMA Order
+The `(p,d,q)` order for each variable is set manually; consider using ACF/PACF plots or `pmdarima.auto_arima` for more optimal results.
 
 ### Add New Data Source
 Edit `data_ingestion.py` and add new collector class, then integrate in `build_unified_dataset()`.
@@ -295,10 +340,10 @@ Edit `model_training.py` and replace `RandomForestRegressor` with `GradientBoost
 
 ## ✅ What's Included
 
-### Python Modules (Production-Ready)
-- ✅ Complete data pipeline
-- ✅ LLM integration (4 backends)
-- ✅ ML model (Random Forest + validation)
+### Forecasting & Modeling
+- ✅ Per-variable time-series forecasting (ARIMA/VAR)
+- ✅ Unified feature pipeline
+- ✅ LLM integration (4 backends) for news & social media sentiment
 - ✅ Government analysis generation
 - ✅ Interactive dashboard factory
 
@@ -315,110 +360,7 @@ Edit `model_training.py` and replace `RandomForestRegressor` with `GradientBoost
 - ✅ Model export (with JS formula)
 - ✅ Datasets (raw + enriched + text batches)
 - ✅ Execution logs
-
----
-
-## 🚀 Deployment Ready
-
-This system is:
-- ✅ **Production-ready** (all error handling in place)
-- ✅ **Well-documented** (4 comprehensive guides)
-- ✅ **Fully self-contained** (no external dependencies at runtime)
-- ✅ **Cross-platform compatible** (Windows/Mac/Linux)
-- ✅ **Easy to extend** (modular architecture)
-
-**Ready for use in:**
-- Government policy briefings
-- Central bank decision support
-- Financial forecasting
-- Economic research
-- Stakeholder presentations
-
----
-
-## 🎓 Educational Value
-
-This project demonstrates:
-1. **Data Engineering**: Web scraping, API integration, temporal alignment
-2. **NLP/LLM**: API integration, prompt engineering, structured output
-3. **ML Engineering**: Time-series validation, feature importance, model export
-4. **Full-Stack Development**: Backend pipeline + frontend simulation
-5. **Government Policy**: Real-world macroeconomic analysis
-
----
-
-## 📞 Support
-
-### Quick Help
-1. Read the relevant documentation section above
-2. Check `execution_log.json` for pipeline details
-3. Review `government_report.txt` for data quality
-4. Inspect browser console (F12) for JavaScript errors
-
-### Common Workflows
-- **Use dashboard**: Open `index.html` in browser
-- **Update prediction**: Run `python main_orchestrator.py`
-- **Modify model**: Edit `model_training.py` and rerun pipeline
-- **Change data source**: Edit `data_ingestion.py` and rerun pipeline
-
----
-
-## 📋 System Requirements
-
-- **Python**: 3.12+
-- **OS**: Windows, macOS, or Linux
-- **Browser**: Any modern browser (Chrome, Firefox, Safari, Edge)
-- **Disk Space**: ~500 MB (with virtual environment)
-- **Internet**: Optional (uses synthetic data if offline)
-
----
-
-## 🎯 Next Steps
-
-1. **Immediate**: Open `index.html` and explore the dashboard
-2. **Test**: Use the simulator panel with different policy scenarios
-3. **Review**: Read government recommendations and impact analysis
-4. **Deploy**: Share dashboard with stakeholders (single HTML file)
-5. **Extend**: Add more data sources or customize for your region
-
----
-
-## 📈 Performance Summary
-
-| Component | Performance |
-|-----------|-------------|
-| Data Ingestion | 2-5s (network dependent) |
-| Sentiment Analysis | 5-15s (API latency) |
-| Model Training | 3-5s |
-| Report Generation | 10-20s (LLM inference) |
-| Dashboard Generation | 1-2s |
-| **Total Pipeline** | **~30 seconds** |
-
----
-
-## 💡 Innovation Highlights
-
-✨ **Full LLM-Driven Analysis** - No rule-based sentiment. LLM analyzes contextually.
-
-✨ **Time-Series Safe** - TimeSeriesSplit prevents look-ahead bias.
-
-✨ **Formula Export** - Model converted to JavaScript for instant prediction.
-
-✨ **Dynamic Prompting** - Government analysis via LLM, no hardcoded templates.
-
-✨ **Fully Standalone** - Single HTML file with embedded simulation engine.
-
----
-
-## ✅ Project Completion Status
-
-- ✅ All 5 phases implemented
-- ✅ System tested and operational
-- ✅ Complete documentation
-- ✅ Production-ready code
-- ✅ Interactive dashboard
-- ✅ Government reports
-- ✅ Ready for deployment
+- ✅ Forecast charts (image/)
 
 ---
 

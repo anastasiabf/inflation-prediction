@@ -56,3 +56,4 @@ site/
 inflation_prediction_output/
 *.log
 .env.local
+tests
