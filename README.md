@@ -20,6 +20,12 @@ python -m http.server 8000
 # Then visit: http://localhost:8000/index.html
 ```
 
+### Option 3: Live Dashboard (GitHub Pages) 🌐
+```bash
+# No setup needed — open in browser:
+https://anastasiabf.github.io/inflation-prediction/
+```
+
 ---
 
 ## 📊 What You'll See

@@ -134,7 +134,7 @@
         <div class="max-w-7xl mx-auto px-6 py-16">
             <h1 class="text-5xl font-bold mb-2">Indonesia Inflation Prediction System</h1>
             <p class="text-xl text-blue-100">AI-Driven Macroeconomic Intelligence & Policy Simulation</p>
-            <p class="text-sm text-blue-200 mt-4">Generated: 2026-06-23 02:11:30</p>
+            <p class="text-sm text-blue-200 mt-4">Generated: 2026-06-23 02:29:40</p>
         </div>
     </div>
     
@@ -146,7 +146,7 @@
             <div class="card-shadow bg-white p-6 rounded-lg">
                 <p class="text-gray-600 text-sm mb-2">PREDICTED INFLATION</p>
                 <div class="metric-badge" id="predictionBadge" style="color: #78350f; background-color: #fefce8;">
-                    3.59%
+                    3.71%
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-3">Next 30 Days</p>
             </div>
@@ -154,7 +154,7 @@
             <div class="card-shadow bg-white p-6 rounded-lg">
                 <p class="text-gray-600 text-sm mb-2">MODEL ACCURACY (R²)</p>
                 <div class="metric-badge metric-yellow">
-                    87.5%
+                    69.1%
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-3">Validation Score</p>
             </div>
@@ -162,7 +162,7 @@
             <div class="card-shadow bg-white p-6 rounded-lg">
                 <p class="text-gray-600 text-sm mb-2">PREDICTION ERROR (RMSE)</p>
                 <div class="metric-badge metric-yellow">
-                    ±0.26%
+                    ±0.47%
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-3">Confidence Interval</p>
             </div>
@@ -185,12 +185,12 @@
             <div class="mt-6 text-sm text-gray-600">
                 <p><strong>Top Factors Influencing Next Month's Inflation:</strong></p>
                 <ul class="mt-3 space-y-2">
-<li>1. <strong>Inflation Rate</strong>: 79.6%</li>
-<li>2. <strong>Social Media Sentiment Llm Score</strong>: 11.6%</li>
-<li>3. <strong>News Sentiment Llm Score</strong>: 4.1%</li>
-<li>4. <strong>Bi Rate</strong>: 1.9%</li>
-<li>5. <strong>Ihk Index</strong>: 1.9%</li>
-<li>6. <strong>Exchange Rate Usd Idr</strong>: 0.8%</li>
+<li>1. <strong>Social Media Sentiment Llm Score</strong>: 25.6%</li>
+<li>2. <strong>Inflation Rate</strong>: 19.3%</li>
+<li>3. <strong>Bi Rate</strong>: 18.5%</li>
+<li>4. <strong>Ihk Index</strong>: 15.4%</li>
+<li>5. <strong>Exchange Rate Usd Idr</strong>: 11.4%</li>
+<li>6. <strong>News Sentiment Llm Score</strong>: 10.0%</li>
                 </ul>
             </div>
         </div>
@@ -204,33 +204,33 @@
                 <div>
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">📈 Historical Inflation Rate (%)</label>
-                        <input type="range" id="sliderInflation" min="1.0" max="8.0" step="0.05" value="3.8"
+                        <input type="range" id="sliderInflation" min="1.0" max="8.0" step="0.05" value="3.9"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>1.0%</span>
-                            <span id="valueInflation" class="font-semibold text-corporate">3.83%</span>
+                            <span id="valueInflation" class="font-semibold text-corporate">3.89%</span>
                             <span>8.0%</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">🏦 BI Policy Rate (%)</label>
-                        <input type="range" id="sliderBIRate" min="3.0" max="8.5" step="0.05" value="6.0"
+                        <input type="range" id="sliderBIRate" min="3.0" max="8.5" step="0.05" value="5.9"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>3.0%</span>
-                            <span id="valueBIRate" class="font-semibold text-corporate">5.95%</span>
+                            <span id="valueBIRate" class="font-semibold text-corporate">5.92%</span>
                             <span>8.5%</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">💱 USD/IDR Exchange Rate</label>
-                        <input type="range" id="sliderExchange" min="14000" max="18000" step="50" value="15469"
+                        <input type="range" id="sliderExchange" min="14000" max="18000" step="50" value="15539"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>Rp 14.000</span>
-                            <span id="valueExchange" class="font-semibold text-corporate">Rp 15,469</span>
+                            <span id="valueExchange" class="font-semibold text-corporate">Rp 15,539</span>
                             <span>Rp 18.000</span>
                         </div>
                     </div>
@@ -239,33 +239,33 @@
                 <div>
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">📊 CPI Index (IHK)</label>
-                        <input type="range" id="sliderIHK" min="105" max="120" step="0.1" value="112.4"
+                        <input type="range" id="sliderIHK" min="105" max="120" step="0.1" value="112.7"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>105</span>
-                            <span id="valueIHK" class="font-semibold text-corporate">112.4</span>
+                            <span id="valueIHK" class="font-semibold text-corporate">112.7</span>
                             <span>120</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">📰 News Sentiment Score</label>
-                        <input type="range" id="sliderNewsSentiment" min="-1" max="1" step="0.05" value="0.05"
+                        <input type="range" id="sliderNewsSentiment" min="-1" max="1" step="0.05" value="0.27"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>😨 Panic (-1)</span>
-                            <span id="valueNewsSentiment" class="font-semibold text-corporate">0.05</span>
+                            <span id="valueNewsSentiment" class="font-semibold text-corporate">0.27</span>
                             <span>😊 Optimism (+1)</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">💬 Social Media Sentiment Score</label>
-                        <input type="range" id="sliderSocialSentiment" min="-1" max="1" step="0.05" value="-0.02"
+                        <input type="range" id="sliderSocialSentiment" min="-1" max="1" step="0.05" value="-0.04"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>😨 Panic (-1)</span>
-                            <span id="valueSocialSentiment" class="font-semibold text-corporate">-0.02</span>
+                            <span id="valueSocialSentiment" class="font-semibold text-corporate">-0.04</span>
                             <span>😊 Optimism (+1)</span>
                         </div>
                     </div>
@@ -287,7 +287,7 @@
             <div class="report-title">Government Impact Analysis</div>
             <div class="report-text">
 <p class="mb-3">GOVERNMENT IMPACT ANALYSIS - MODERATE INFLATION SCENARIO</p>
-<p class="mb-3">The projected inflation rate of 3.59% falls within manageable parameters but requires careful monitoring. Current trajectory indicates stable expectations with moderate policy accommodation space.</p>
+<p class="mb-3">The projected inflation rate of 3.71% falls within manageable parameters but requires careful monitoring. Current trajectory indicates stable expectations with moderate policy accommodation space.</p>
 <p class="mb-3">Fiscal Impact: Government subsidy requirements remain moderate and predictable. Budget execution becomes less volatile than high-inflation scenarios.</p>
 <p class="mb-3">Purchasing Power: Real income remains relatively stable. Wage growth expectations align with inflation, limiting labor market friction.</p>
 <p class="mb-3">Exchange Rate: Rupiah shows normal volatility patterns. No extraordinary pressure on reserves or exchange market intervention.</p>
@@ -332,23 +332,23 @@
     <!-- Data Embedded in Script -->
     <script>
         // Historical data for chart
-        const historicalData = {"dates": ["2026-05", "2026-05", "2026-05", "2026-05", "2026-05", "2026-05", "2026-06", "2026-06", "2026-06", "2026-06", "2026-06", "2026-06"], "values": [4.033355731660629, 4.033355731660629, 4.033355731660629, 4.033355731660629, 4.033355731660629, 4.033355731660629, 3.587891084524443, 3.587891084524443, 3.587891084524443, 3.587891084524443, 3.587891084524443, 3.587891084524443]};
+        const historicalData = {"dates": ["2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"], "values": [3.022809831864604, 4.980292436874343, 5.91712767552815, 4.176368041935821, 2.7152703193307124, 4.793102160365204, 3.7134321796960643, 3.272936921676095, 2.908176945036304, 4.472968646617324, 4.360941128199576, 3.794731618622817]};
         
         // Model export data
-        const modelExport = {"model_type": "random_forest", "n_estimators": 100, "feature_names": ["inflation_rate", "bi_rate", "exchange_rate_usd_idr", "ihk_index", "news_sentiment_llm_score", "social_media_sentiment_llm_score"], "feature_count": 6, "feature_importances": {"inflation_rate": 0.7963037289664772, "bi_rate": 0.01910560239929372, "exchange_rate_usd_idr": 0.008291651992496983, "ihk_index": 0.019039951341714576, "news_sentiment_llm_score": 0.04143590631505054, "social_media_sentiment_llm_score": 0.11582315898496719}, "feature_importance_ranking": [{"feature": "inflation_rate", "importance": 0.7963037289664772}, {"feature": "social_media_sentiment_llm_score", "importance": 0.11582315898496719}, {"feature": "news_sentiment_llm_score", "importance": 0.04143590631505054}, {"feature": "bi_rate", "importance": 0.01910560239929372}, {"feature": "ihk_index", "importance": 0.019039951341714576}, {"feature": "exchange_rate_usd_idr", "importance": 0.008291651992496983}], "linear_approximation": {"intercept": 1.4153137668121913, "coefficients": {"inflation_rate": 0.6561935418846866, "bi_rate": -0.00536819776411961, "exchange_rate_usd_idr": -2.6965448954993164e-06, "ihk_index": -0.0006008936772101662, "news_sentiment_llm_score": -0.003605519862230569, "social_media_sentiment_llm_score": -0.022200912575668762}}, "training_metrics": {"mae": 0.1343232264861769, "rmse": 0.25551815269175226, "r2": 0.8747744478951037, "n_samples": 215, "n_features": 6}, "prediction_formula": "function predictInflation(features) {\n  let prediction = 1.415314;\n  prediction += 0.656194 * features['inflation_rate'];\n  prediction += -0.005368 * features['bi_rate'];\n  prediction += -0.000003 * features['exchange_rate_usd_idr'];\n  prediction += -0.000601 * features['ihk_index'];\n  prediction += -0.003606 * features['news_sentiment_llm_score'];\n  prediction += -0.022201 * features['social_media_sentiment_llm_score'];\n  return Math.max(0, Math.min(10, prediction));\n}", "feature_ranges": {"inflation_rate": {"min": 2.4046644612689363, "max": 5.421494538561287, "mean": 3.832445090492303, "std": 0.7219220510668676}, "bi_rate": {"min": 5.127860967579316, "max": 7.1018277017965366, "mean": 5.9547224889797965, "std": 0.4376550863076998}, "exchange_rate_usd_idr": {"min": 14881.375145386866, "max": 16042.166227974825, "mean": 15468.834275288098, "std": 293.3457187276869}, "ihk_index": {"min": 109.67928027728097, "max": 116.79756469190384, "mean": 112.38629496020795, "std": 1.7823395515142022}, "news_sentiment_llm_score": {"min": -0.19033785976074477, "max": 1.0, "mean": 0.047698428387770254, "std": 0.23720990758817373}, "social_media_sentiment_llm_score": {"min": -0.9586886466408728, "max": 1.0, "mean": -0.016651151797623612, "std": 0.21047442207301056}}};
+        const modelExport = {"model_type": "random_forest", "n_estimators": 100, "feature_names": ["inflation_rate", "bi_rate", "exchange_rate_usd_idr", "ihk_index", "news_sentiment_llm_score", "social_media_sentiment_llm_score"], "feature_count": 6, "feature_importances": {"inflation_rate": 0.19250114786649428, "bi_rate": 0.1846540417326925, "exchange_rate_usd_idr": 0.11356806697429098, "ihk_index": 0.15371849070053742, "news_sentiment_llm_score": 0.10003014856930453, "social_media_sentiment_llm_score": 0.25552810415668015}, "feature_importance_ranking": [{"feature": "social_media_sentiment_llm_score", "importance": 0.25552810415668015}, {"feature": "inflation_rate", "importance": 0.19250114786649428}, {"feature": "bi_rate", "importance": 0.1846540417326925}, {"feature": "ihk_index", "importance": 0.15371849070053742}, {"feature": "exchange_rate_usd_idr", "importance": 0.11356806697429098}, {"feature": "news_sentiment_llm_score", "importance": 0.10003014856930453}], "linear_approximation": {"intercept": 1.8822773158334536, "coefficients": {"inflation_rate": -0.012365021096414172, "bi_rate": 0.026947882804115773, "exchange_rate_usd_idr": 3.374960215003218e-05, "ihk_index": 0.010727522007402209, "news_sentiment_llm_score": 0.02041660528698234, "social_media_sentiment_llm_score": -0.02785033967920062}}, "training_metrics": {"mae": 0.36603258162958663, "rmse": 0.4702693466957483, "r2": 0.6912029590607456, "n_samples": 35, "n_features": 6}, "prediction_formula": "function predictInflation(features) {\n  let prediction = 1.882277;\n  prediction += -0.012365 * features['inflation_rate'];\n  prediction += 0.026948 * features['bi_rate'];\n  prediction += 0.000034 * features['exchange_rate_usd_idr'];\n  prediction += 0.010728 * features['ihk_index'];\n  prediction += 0.020417 * features['news_sentiment_llm_score'];\n  prediction += -0.027850 * features['social_media_sentiment_llm_score'];\n  return Math.max(0, Math.min(10, prediction));\n}", "feature_ranges": {"inflation_rate": {"min": 2.1821655868248877, "max": 5.91712767552815, "mean": 3.888321463128736, "std": 0.8609067135966392}, "bi_rate": {"min": 4.594332952159872, "max": 7.200762764219593, "mean": 5.920882575881727, "std": 0.5864886878460063}, "exchange_rate_usd_idr": {"min": 14709.612550707929, "max": 16352.240543867838, "mean": 15539.403707760363, "std": 281.6013519166237}, "ihk_index": {"min": 108.89325061255731, "max": 115.5519346722505, "mean": 112.66974598092861, "std": 1.9567713583872328}, "news_sentiment_llm_score": {"min": -0.19249253514918727, "max": 1.0, "mean": 0.26627285501431175, "std": 0.45811165006427446}, "social_media_sentiment_llm_score": {"min": -0.9476574196093204, "max": 1.0, "mean": -0.04280674811211626, "std": 0.4561419014622444}}};
         
         // Feature ranges for normalization
-        const featureRanges = {"inflation_rate": {"min": 2.4046644612689363, "max": 5.421494538561287, "mean": 3.832445090492303, "std": 0.7219220510668676}, "bi_rate": {"min": 5.127860967579316, "max": 7.1018277017965366, "mean": 5.9547224889797965, "std": 0.4376550863076998}, "exchange_rate_usd_idr": {"min": 14881.375145386866, "max": 16042.166227974825, "mean": 15468.834275288098, "std": 293.3457187276869}, "ihk_index": {"min": 109.67928027728097, "max": 116.79756469190384, "mean": 112.38629496020795, "std": 1.7823395515142022}, "news_sentiment_llm_score": {"min": -0.19033785976074477, "max": 1.0, "mean": 0.047698428387770254, "std": 0.23720990758817373}, "social_media_sentiment_llm_score": {"min": -0.9586886466408728, "max": 1.0, "mean": -0.016651151797623612, "std": 0.21047442207301056}};
+        const featureRanges = {"inflation_rate": {"min": 2.1821655868248877, "max": 5.91712767552815, "mean": 3.888321463128736, "std": 0.8609067135966392}, "bi_rate": {"min": 4.594332952159872, "max": 7.200762764219593, "mean": 5.920882575881727, "std": 0.5864886878460063}, "exchange_rate_usd_idr": {"min": 14709.612550707929, "max": 16352.240543867838, "mean": 15539.403707760363, "std": 281.6013519166237}, "ihk_index": {"min": 108.89325061255731, "max": 115.5519346722505, "mean": 112.66974598092861, "std": 1.9567713583872328}, "news_sentiment_llm_score": {"min": -0.19249253514918727, "max": 1.0, "mean": 0.26627285501431175, "std": 0.45811165006427446}, "social_media_sentiment_llm_score": {"min": -0.9476574196093204, "max": 1.0, "mean": -0.04280674811211626, "std": 0.4561419014622444}};
         
         // Prediction function (extracted from model)
         function predictInflation(features) {
-            let prediction = 1.4153137668121913;
-            prediction += 0.656194 * features['inflation_rate'];
-            prediction += -0.005368 * features['bi_rate'];
-            prediction += -0.000003 * features['exchange_rate_usd_idr'];
-            prediction += -0.000601 * features['ihk_index'];
-            prediction += -0.003606 * features['news_sentiment_llm_score'];
-            prediction += -0.022201 * features['social_media_sentiment_llm_score'];
+            let prediction = 1.8822773158334536;
+            prediction += -0.012365 * features['inflation_rate'];
+            prediction += 0.026948 * features['bi_rate'];
+            prediction += 0.000034 * features['exchange_rate_usd_idr'];
+            prediction += 0.010728 * features['ihk_index'];
+            prediction += 0.020417 * features['news_sentiment_llm_score'];
+            prediction += -0.027850 * features['social_media_sentiment_llm_score'];
             return Math.max(0, Math.min(10, prediction));
         }
         
@@ -413,7 +413,7 @@
             
             // Add prediction point
             dates.push(dates[dates.length - 1] + ' (Pred)');
-            inflationValues.push(3.586948202407244);
+            inflationValues.push(3.7095495964065384);
             
             new Chart(ctx1, {
                 type: 'line',
@@ -434,7 +434,7 @@
                         },
                         {
                             label: 'Predicted Inflation',
-                            data: Array(inflationValues.length - 2).fill(null).concat([inflationValues[inflationValues.length - 2], 3.586948202407244]),
+                            data: Array(inflationValues.length - 2).fill(null).concat([inflationValues[inflationValues.length - 2], 3.7095495964065384]),
                             borderColor: '#ef4444',
                             borderDash: [5, 5],
                             borderWidth: 2,

@@ -292,15 +292,16 @@ class DataPipeline:
     def build_unified_dataset(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
         Build complete unified dataset with aligned monthly index.
-        
+
         Returns:
-            - X_data: Feature matrix without target
-            - y_data: Target variable (next month inflation)
+            - unified_df: Complete feature matrix
+            - news_df: News text batches
+            - social_df: Social media text batches
         """
         logger.info("=" * 60)
         logger.info("BUILDING UNIFIED MONTHLY DATASET")
         logger.info("=" * 60)
-        
+
         # Collect all data sources
         inflation_df = self.inflation_scraper.scrape_inflation_table()
         exchange_df = self.exchange_collector.fetch_monthly_usd_idr(self.months)
@@ -308,8 +309,24 @@ class DataPipeline:
         ihk_df = self.macro_collector.fetch_ihk_index(self.months)
         news_df = self.macro_collector.generate_news_text_batches(self.months)
         social_df = self.macro_collector.generate_social_media_text_batches(self.months)
-        
-        # Align all to monthly cadence
+
+        # Normalize all indices to month-start (avoids time-component mismatches
+        # when each collector generates dates independently)
+        def normalize_index(df):
+            df = df.copy()
+            df.index = df.index.normalize()  # strip time component
+            df.index = pd.to_datetime(df.index.strftime('%Y-%m-%d'))  # ensure consistent
+            df = df[~df.index.duplicated(keep='first')]  # remove any duplicate months
+            return df
+
+        inflation_df = normalize_index(inflation_df)
+        exchange_df = normalize_index(exchange_df)
+        bi_rate_df = normalize_index(bi_rate_df)
+        ihk_df = normalize_index(ihk_df)
+        news_df = normalize_index(news_df)
+        social_df = normalize_index(social_df)
+
+        # Align all to monthly cadence using inner join (only months with all data)
         unified_df = pd.concat([
             inflation_df.rename(columns={'inflation': 'inflation_rate'}),
             exchange_df,
@@ -317,15 +334,19 @@ class DataPipeline:
             ihk_df,
             news_df,
             social_df
-        ], axis=1, join='outer')
-        
-        # Forward fill missing values
-        unified_df = unified_df.ffill().bfill()
-        
+        ], axis=1, join='inner')
+
+        # Drop any remaining duplicate index entries
+        unified_df = unified_df[~unified_df.index.duplicated(keep='first')]
+
+        # Sort by date
+        unified_df = unified_df.sort_index()
+
         logger.info(f"Unified dataset shape: {unified_df.shape}")
         logger.info(f"Date range: {unified_df.index.min()} to {unified_df.index.max()}")
         logger.info(f"Columns: {list(unified_df.columns)}")
-        
+        logger.info(f"Unique months: {len(unified_df)}")
+
         return unified_df, news_df, social_df
     
     def export_to_json(self, df: pd.DataFrame, output_path: str):
