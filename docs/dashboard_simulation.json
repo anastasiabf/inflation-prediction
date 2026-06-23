@@ -1,0 +1,334 @@
+{
+  "_description": "Dummy data for Inflation Prediction Dashboard simulation. All 6 model features are represented.",
+  "_generated": "2026-06-23",
+  "_version": "1.0",
+
+  "model_metadata": {
+    "model_type": "random_forest",
+    "n_estimators": 100,
+    "feature_count": 6,
+    "feature_names": [
+      "inflation_rate",
+      "bi_rate",
+      "exchange_rate_usd_idr",
+      "ihk_index",
+      "news_sentiment_llm_score",
+      "social_media_sentiment_llm_score"
+    ],
+    "prediction_formula": "prediction = 1.402612 + 0.648724*inflation_rate - 0.001084*bi_rate - 0.000001*exchange_rate - 0.000096*ihk_index + 0.005885*news_sentiment - 0.046858*social_media_sentiment",
+    "training_metrics": {
+      "mae": 0.1235,
+      "rmse": 0.2490,
+      "r2": 0.8917,
+      "n_samples": 215,
+      "n_features": 6
+    }
+  },
+
+  "feature_importances": {
+    "inflation_rate": 0.7844,
+    "social_media_sentiment_llm_score": 0.1639,
+    "news_sentiment_llm_score": 0.0271,
+    "ihk_index": 0.0088,
+    "bi_rate": 0.0084,
+    "exchange_rate_usd_idr": 0.0076
+  },
+
+  "feature_importance_ranking": [
+    { "rank": 1, "feature": "Inflation Rate (Momentum)", "importance_pct": 78.44, "description": "Historical inflation is the strongest predictor — momentum effect dominates" },
+    { "rank": 2, "feature": "Social Media Sentiment", "importance_pct": 16.39, "description": "Public expectations on social platforms significantly influence inflation trajectory" },
+    { "rank": 3, "feature": "News Sentiment", "importance_pct": 2.71, "description": "Media narrative contributes to shaping inflation expectations" },
+    { "rank": 4, "feature": "CPI Index (IHK)", "importance_pct": 0.88, "description": "Consumer Price Index level provides baseline for inflation measurement" },
+    { "rank": 5, "feature": "BI Policy Rate", "importance_pct": 0.84, "description": "Central bank rate influences through monetary transmission mechanism" },
+    { "rank": 6, "feature": "Exchange Rate (USD/IDR)", "importance_pct": 0.76, "description": "Rupiah valuation affects import costs and pass-through inflation" }
+  ],
+
+  "linear_approximation": {
+    "intercept": 1.402612,
+    "coefficients": {
+      "inflation_rate": 0.648724,
+      "bi_rate": -0.001084,
+      "exchange_rate_usd_idr": -0.00000122,
+      "ihk_index": -0.0000963,
+      "news_sentiment_llm_score": 0.005885,
+      "social_media_sentiment_llm_score": -0.046858
+    }
+  },
+
+  "feature_ranges": {
+    "inflation_rate": { "min": 2.73, "max": 5.21, "mean": 3.88, "std": 0.76, "unit": "%" },
+    "bi_rate": { "min": 4.58, "max": 7.25, "mean": 5.90, "std": 0.52, "unit": "%" },
+    "exchange_rate_usd_idr": { "min": 15018, "max": 15995, "mean": 15573, "std": 247, "unit": "IDR" },
+    "ihk_index": { "min": 109.97, "max": 115.53, "mean": 112.45, "std": 1.52, "unit": "index" },
+    "news_sentiment_llm_score": { "min": -0.20, "max": 1.00, "mean": 0.05, "std": 0.22, "unit": "score [-1, +1]" },
+    "social_media_sentiment_llm_score": { "min": -0.92, "max": 0.98, "mean": 0.00, "std": 0.20, "unit": "score [-1, +1]" }
+  },
+
+  "historical_data": {
+    "dates": [
+      "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12",
+      "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06",
+      "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12",
+      "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06",
+      "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12",
+      "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"
+    ],
+    "inflation_rate": [
+      3.08, 3.27, 2.28, 2.56, 2.86, 2.61,
+      2.57, 2.75, 3.05, 3.00, 2.84, 2.51,
+      2.13, 2.12, 1.84, 1.71, 1.55, 1.57,
+      1.50, 1.48, 2.10, 2.50, 3.10, 3.30,
+      3.50, 3.20, 2.80, 2.95, 3.15, 3.40,
+      3.55, 3.62, 3.78, 3.85, 3.92, 3.88
+    ],
+    "bi_rate": [
+      5.75, 5.75, 5.75, 6.00, 6.00, 6.00,
+      6.00, 6.00, 6.25, 6.25, 6.25, 6.25,
+      6.25, 6.25, 6.00, 6.00, 6.00, 6.00,
+      5.75, 5.75, 5.75, 5.75, 5.75, 5.75,
+      5.50, 5.50, 5.50, 5.50, 5.50, 5.75,
+      5.75, 5.75, 6.00, 6.00, 6.00, 6.00
+    ],
+    "exchange_rate_usd_idr": [
+      15050, 15200, 15350, 15480, 15500, 15420,
+      15600, 15650, 15700, 15880, 15900, 15850,
+      15700, 15550, 15400, 15350, 15200, 15150,
+      15080, 15050, 15200, 15400, 15550, 15680,
+      15750, 15800, 15650, 15500, 15400, 15350,
+      15300, 15250, 15380, 15450, 15520, 15550
+    ],
+    "ihk_index": [
+      110.0, 110.2, 110.1, 110.3, 110.5, 110.7,
+      110.8, 110.9, 111.2, 111.3, 111.4, 111.5,
+      111.6, 111.5, 111.4, 111.3, 111.2, 111.4,
+      111.5, 111.6, 111.8, 112.0, 112.2, 112.4,
+      112.5, 112.4, 112.3, 112.4, 112.6, 112.8,
+      113.0, 113.2, 113.4, 113.6, 113.8, 114.0
+    ],
+    "news_sentiment_llm_score": [
+      -0.05, -0.10, -0.08, 0.02, 0.05, 0.08,
+      0.10, 0.05, -0.02, -0.05, 0.00, 0.03,
+      0.08, 0.10, 0.12, 0.10, 0.05, 0.02,
+      0.00, -0.03, -0.05, -0.08, -0.10, -0.05,
+      0.00, 0.02, 0.05, 0.08, 0.10, 0.12,
+      0.15, 0.10, 0.05, 0.02, 0.00, 0.05
+    ],
+    "social_media_sentiment_llm_score": [
+      -0.15, -0.20, -0.25, -0.10, 0.00, 0.05,
+      0.10, 0.08, -0.05, -0.10, -0.15, -0.08,
+      0.00, 0.05, 0.08, 0.05, 0.00, -0.05,
+      -0.08, -0.15, -0.20, -0.30, -0.25, -0.15,
+      -0.05, 0.00, 0.05, 0.10, 0.15, 0.20,
+      0.25, 0.20, 0.10, 0.05, 0.00, 0.00
+    ]
+  },
+
+  "prediction": {
+    "current_month": "2026-07",
+    "predicted_inflation": 3.82,
+    "confidence_interval": { "lower": 3.57, "upper": 4.07 },
+    "trend": "moderate_rising",
+    "risk_level": "yellow",
+    "within_bi_target": true
+  },
+
+  "simulation_scenarios": [
+    {
+      "id": "baseline",
+      "name": "📊 Baseline (Current Trajectory)",
+      "description": "All variables at current values — no intervention",
+      "inputs": {
+        "inflation_rate": 3.88,
+        "bi_rate": 6.00,
+        "exchange_rate_usd_idr": 15550,
+        "ihk_index": 114.0,
+        "news_sentiment_llm_score": 0.05,
+        "social_media_sentiment_llm_score": 0.00
+      },
+      "predicted_inflation": 3.82,
+      "badge": "yellow",
+      "badge_label": "Moderate — within BI target"
+    },
+    {
+      "id": "bi_rate_hike",
+      "name": "🏦 BI Rate Hike (+200bps)",
+      "description": "Central bank aggressively raises rates to cool inflation",
+      "inputs": {
+        "inflation_rate": 3.88,
+        "bi_rate": 8.00,
+        "exchange_rate_usd_idr": 15550,
+        "ihk_index": 114.0,
+        "news_sentiment_llm_score": 0.05,
+        "social_media_sentiment_llm_score": 0.00
+      },
+      "predicted_inflation": 3.79,
+      "badge": "yellow",
+      "badge_label": "Rate hike cools inflation modestly"
+    },
+    {
+      "id": "currency_crisis",
+      "name": "💱 Currency Crisis (IDR at 17,000)",
+      "description": "Rupiah weakens sharply due to capital outflows",
+      "inputs": {
+        "inflation_rate": 3.88,
+        "bi_rate": 6.00,
+        "exchange_rate_usd_idr": 17000,
+        "ihk_index": 114.0,
+        "news_sentiment_llm_score": 0.05,
+        "social_media_sentiment_llm_score": 0.00
+      },
+      "predicted_inflation": 3.82,
+      "badge": "yellow",
+      "badge_label": "Exchange rate has minimal direct impact (low feature importance)"
+    },
+    {
+      "id": "sentiment_crash",
+      "name": "😨 Public Panic (Sentiment at -1.0)",
+      "description": "Social media and news sentiment plummet to extreme negative",
+      "inputs": {
+        "inflation_rate": 3.88,
+        "bi_rate": 6.00,
+        "exchange_rate_usd_idr": 15550,
+        "ihk_index": 114.0,
+        "news_sentiment_llm_score": -1.0,
+        "social_media_sentiment_llm_score": -1.0
+      },
+      "predicted_inflation": 3.87,
+      "badge": "yellow",
+      "badge_label": "Negative sentiment slightly pushes inflation up"
+    },
+    {
+      "id": "sentiment_optimism",
+      "name": "😊 Public Optimism (Sentiment at +1.0)",
+      "description": "Strong positive sentiment from policy success and economic growth",
+      "inputs": {
+        "inflation_rate": 3.88,
+        "bi_rate": 6.00,
+        "exchange_rate_usd_idr": 15550,
+        "ihk_index": 114.0,
+        "news_sentiment_llm_score": 1.0,
+        "social_media_sentiment_llm_score": 1.0
+      },
+      "predicted_inflation": 3.77,
+      "badge": "yellow",
+      "badge_label": "Optimism anchors inflation expectations downward"
+    },
+    {
+      "id": "worst_case",
+      "name": "🔴 Worst Case (High Inflation + Weak Rupiah + Panic)",
+      "description": "Combination of high inflation momentum, weak currency, and negative sentiment",
+      "inputs": {
+        "inflation_rate": 5.50,
+        "bi_rate": 5.50,
+        "exchange_rate_usd_idr": 17000,
+        "ihk_index": 118.0,
+        "news_sentiment_llm_score": -0.80,
+        "social_media_sentiment_llm_score": -0.80
+      },
+      "predicted_inflation": 5.02,
+      "badge": "red",
+      "badge_label": "⚠️ High inflation — policy intervention needed"
+    },
+    {
+      "id": "best_case",
+      "name": "🟢 Best Case (Low Inflation + Strong Rupiah + Optimism)",
+      "description": "Favorable conditions: low momentum, strong currency, positive sentiment",
+      "inputs": {
+        "inflation_rate": 2.50,
+        "bi_rate": 5.00,
+        "exchange_rate_usd_idr": 15000,
+        "ihk_index": 110.0,
+        "news_sentiment_llm_score": 0.80,
+        "social_media_sentiment_llm_score": 0.80
+      },
+      "predicted_inflation": 2.95,
+      "badge": "green",
+      "badge_label": "✓ Low inflation — price stability achieved"
+    },
+    {
+      "id": "high_inflation_momentum",
+      "name": "📈 Inflation Momentum Spike",
+      "description": "Historical inflation jumps to 5.5% — testing momentum effect dominance",
+      "inputs": {
+        "inflation_rate": 5.50,
+        "bi_rate": 6.00,
+        "exchange_rate_usd_idr": 15550,
+        "ihk_index": 114.0,
+        "news_sentiment_llm_score": 0.05,
+        "social_media_sentiment_llm_score": 0.00
+      },
+      "predicted_inflation": 4.87,
+      "badge": "red",
+      "badge_label": "⚠️ Momentum effect dominates — inflation persists"
+    }
+  ],
+
+  "monthly_details": [
+    {
+      "month": "2026-01",
+      "inflation": 3.55,
+      "bi_rate": 5.75,
+      "exchange_rate": 15300,
+      "ihk": 113.0,
+      "news_sentiment": 0.15,
+      "social_sentiment": 0.25,
+      "news_headlines": "Bank Indonesia holds rates steady; inflation remains within target corridor",
+      "social_media_buzz": "Optimism about economic recovery grows as prices stabilize"
+    },
+    {
+      "month": "2026-02",
+      "inflation": 3.62,
+      "bi_rate": 5.75,
+      "exchange_rate": 15250,
+      "ihk": 113.2,
+      "news_sentiment": 0.10,
+      "social_sentiment": 0.20,
+      "news_headlines": "Rupiah strengthens amid foreign capital inflows; import prices ease",
+      "social_media_buzz": "Harga mulai stabil, semoga bertahan sampai Lebaran"
+    },
+    {
+      "month": "2026-03",
+      "inflation": 3.78,
+      "bi_rate": 6.00,
+      "exchange_rate": 15380,
+      "ihk": 113.4,
+      "news_sentiment": 0.05,
+      "social_sentiment": 0.10,
+      "news_headlines": "BI raises rate 25bps preemptively; food prices tick up ahead of Ramadan",
+      "social_media_buzz": "BI naikkan suku bunga lagi, cicilan KPR bisa naik"
+    },
+    {
+      "month": "2026-04",
+      "inflation": 3.85,
+      "bi_rate": 6.00,
+      "exchange_rate": 15450,
+      "ihk": 113.6,
+      "news_sentiment": 0.02,
+      "social_sentiment": 0.05,
+      "news_headlines": "Ramadan demand pushes food inflation higher; government assures supply",
+      "social_media_buzz": "Harga daging dan telur naik lagi, pemerintah tolong lakukan sesuatu"
+    },
+    {
+      "month": "2026-05",
+      "inflation": 3.92,
+      "bi_rate": 6.00,
+      "exchange_rate": 15520,
+      "ihk": 113.8,
+      "news_sentiment": 0.00,
+      "social_sentiment": 0.00,
+      "news_headlines": "Post-Lebaran normalization underway; annual inflation edges toward 4%",
+      "social_media_buzz": "Inflasi meningkat tapi gaji tetap, daya beli makin tergerus"
+    },
+    {
+      "month": "2026-06",
+      "inflation": 3.88,
+      "bi_rate": 6.00,
+      "exchange_rate": 15550,
+      "ihk": 114.0,
+      "news_sentiment": 0.05,
+      "social_sentiment": 0.00,
+      "news_headlines": "Inflation moderates slightly; BI maintains cautious stance",
+      "social_media_buzz": "Inflasi sedikit turun, semoga ini awal tren positif"
+    }
+  ]
+}

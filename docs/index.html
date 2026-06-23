@@ -1,43 +1,4 @@
-"""
-PHASE 5: STANDALONE HTML FACTORY WITH JS SIMULATION ENGINE
-Generates index.html with Tailwind CSS, Chart.js, and interactive simulation sliders.
-"""
-
-import json
-import logging
-from typing import Dict
-from datetime import datetime
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-
-class HTMLFactory:
-    """
-    Factory for generating standalone index.html dashboard.
-    Embeds all data, visualizations, and simulation logic.
-    """
-    
-    def __init__(self):
-        self.theme_color = "#1e3a8a"  # Deep Corporate Blue
-    
-    def generate_html(self, prediction: float, historical_data: Dict,
-                     model_export: Dict, report: Dict) -> str:
-        """
-        Generate complete standalone HTML dashboard.
-        
-        Args:
-            prediction: Predicted inflation rate
-            historical_data: Historical inflation time series
-            model_export: Model coefficients and metadata
-            report: Government insights report
-            
-        Returns:
-            Complete HTML string
-        """
-        logger.info("Generating standalone HTML dashboard...")
-        
-        html = f"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,119 +13,119 @@ class HTMLFactory:
     
     <!-- Custom Tailwind Config -->
     <script>
-        tailwind.config = {{
-            theme: {{
-                extend: {{
-                    colors: {{
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
                         'corporate': '#1e3a8a',
                         'corporate-light': '#3b82f6',
                         'corporate-dark': '#0f172a'
-                    }}
-                }}
-            }}
-        }};
+                    }
+                }
+            }
+        };
     </script>
     
     <style>
-        body {{
+        body {
             background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-        }}
+        }
         
-        .hero-gradient {{
-            background: linear-gradient(135deg, {self.theme_color} 0%, #2563eb 100%);
-        }}
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        }
         
-        .card-shadow {{
+        .card-shadow {
             box-shadow: 0 4px 20px rgba(30, 58, 138, 0.1);
-        }}
+        }
         
-        .metric-badge {{
+        .metric-badge {
             padding: 12px 24px;
             border-radius: 12px;
             font-weight: 600;
             font-size: 24px;
             text-align: center;
-        }}
+        }
         
-        .metric-green {{
+        .metric-green {
             background-color: #ecfdf5;
             color: #065f46;
-        }}
+        }
         
-        .metric-red {{
+        .metric-red {
             background-color: #fef2f2;
             color: #7f1d1d;
-        }}
+        }
         
-        .metric-yellow {{
+        .metric-yellow {
             background-color: #fefce8;
             color: #78350f;
-        }}
+        }
         
-        .slider-container {{
+        .slider-container {
             position: relative;
             padding: 20px;
             background: white;
             border-radius: 12px;
             margin-bottom: 16px;
-        }}
+        }
         
-        input[type='range'] {{
+        input[type='range'] {
             width: 100%;
             height: 8px;
             border-radius: 5px;
             background: linear-gradient(to right, #10b981, #eab308, #ef4444);
             outline: none;
             -webkit-appearance: none;
-        }}
+        }
         
-        input[type='range']::-webkit-slider-thumb {{
+        input[type='range']::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: {self.theme_color};
+            background: #1e3a8a;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }}
+        }
         
-        input[type='range']::-moz-range-thumb {{
+        input[type='range']::-moz-range-thumb {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: {self.theme_color};
+            background: #1e3a8a;
             cursor: pointer;
             border: none;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }}
+        }
         
-        .chart-container {{
+        .chart-container {
             position: relative;
             height: 400px;
             margin-bottom: 20px;
-        }}
+        }
         
-        .report-section {{
+        .report-section {
             background: white;
-            border-left: 4px solid {self.theme_color};
+            border-left: 4px solid #1e3a8a;
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 8px;
-        }}
+        }
         
-        .report-title {{
+        .report-title {
             font-size: 20px;
             font-weight: 700;
-            color: {self.theme_color};
+            color: #1e3a8a;
             margin-bottom: 12px;
-        }}
+        }
         
-        .report-text {{
+        .report-text {
             font-size: 15px;
             line-height: 1.6;
             color: #374151;
-        }}
+        }
     </style>
 </head>
 <body class="font-sans">
@@ -173,7 +134,7 @@ class HTMLFactory:
         <div class="max-w-7xl mx-auto px-6 py-16">
             <h1 class="text-5xl font-bold mb-2">Indonesia Inflation Prediction System</h1>
             <p class="text-xl text-blue-100">AI-Driven Macroeconomic Intelligence & Policy Simulation</p>
-            <p class="text-sm text-blue-200 mt-4">Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+            <p class="text-sm text-blue-200 mt-4">Generated: 2026-06-23 02:11:30</p>
         </div>
     </div>
     
@@ -184,8 +145,8 @@ class HTMLFactory:
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div class="card-shadow bg-white p-6 rounded-lg">
                 <p class="text-gray-600 text-sm mb-2">PREDICTED INFLATION</p>
-                <div class="metric-badge" id="predictionBadge" style="color: {self._get_color_for_value(prediction)}; background-color: {self._get_bg_color_for_value(prediction)};">
-                    {prediction:.2f}%
+                <div class="metric-badge" id="predictionBadge" style="color: #78350f; background-color: #fefce8;">
+                    3.59%
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-3">Next 30 Days</p>
             </div>
@@ -193,7 +154,7 @@ class HTMLFactory:
             <div class="card-shadow bg-white p-6 rounded-lg">
                 <p class="text-gray-600 text-sm mb-2">MODEL ACCURACY (R²)</p>
                 <div class="metric-badge metric-yellow">
-                    {model_export['training_metrics']['r2']:.1%}
+                    87.5%
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-3">Validation Score</p>
             </div>
@@ -201,7 +162,7 @@ class HTMLFactory:
             <div class="card-shadow bg-white p-6 rounded-lg">
                 <p class="text-gray-600 text-sm mb-2">PREDICTION ERROR (RMSE)</p>
                 <div class="metric-badge metric-yellow">
-                    ±{model_export['training_metrics']['rmse']:.2f}%
+                    ±0.26%
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-3">Confidence Interval</p>
             </div>
@@ -224,7 +185,12 @@ class HTMLFactory:
             <div class="mt-6 text-sm text-gray-600">
                 <p><strong>Top Factors Influencing Next Month's Inflation:</strong></p>
                 <ul class="mt-3 space-y-2">
-{self._render_importance_list(model_export['feature_importance_ranking'])}
+<li>1. <strong>Inflation Rate</strong>: 79.6%</li>
+<li>2. <strong>Social Media Sentiment Llm Score</strong>: 11.6%</li>
+<li>3. <strong>News Sentiment Llm Score</strong>: 4.1%</li>
+<li>4. <strong>Bi Rate</strong>: 1.9%</li>
+<li>5. <strong>Ihk Index</strong>: 1.9%</li>
+<li>6. <strong>Exchange Rate Usd Idr</strong>: 0.8%</li>
                 </ul>
             </div>
         </div>
@@ -238,33 +204,33 @@ class HTMLFactory:
                 <div>
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">📈 Historical Inflation Rate (%)</label>
-                        <input type="range" id="sliderInflation" min="1.0" max="8.0" step="0.05" value="{model_export['feature_ranges']['inflation_rate']['mean']:.1f}"
+                        <input type="range" id="sliderInflation" min="1.0" max="8.0" step="0.05" value="3.8"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>1.0%</span>
-                            <span id="valueInflation" class="font-semibold text-corporate">{model_export['feature_ranges']['inflation_rate']['mean']:.2f}%</span>
+                            <span id="valueInflation" class="font-semibold text-corporate">3.83%</span>
                             <span>8.0%</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">🏦 BI Policy Rate (%)</label>
-                        <input type="range" id="sliderBIRate" min="3.0" max="8.5" step="0.05" value="{model_export['feature_ranges']['bi_rate']['mean']:.1f}"
+                        <input type="range" id="sliderBIRate" min="3.0" max="8.5" step="0.05" value="6.0"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>3.0%</span>
-                            <span id="valueBIRate" class="font-semibold text-corporate">{model_export['feature_ranges']['bi_rate']['mean']:.2f}%</span>
+                            <span id="valueBIRate" class="font-semibold text-corporate">5.95%</span>
                             <span>8.5%</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">💱 USD/IDR Exchange Rate</label>
-                        <input type="range" id="sliderExchange" min="14000" max="18000" step="50" value="{model_export['feature_ranges']['exchange_rate_usd_idr']['mean']:.0f}"
+                        <input type="range" id="sliderExchange" min="14000" max="18000" step="50" value="15469"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>Rp 14.000</span>
-                            <span id="valueExchange" class="font-semibold text-corporate">Rp {model_export['feature_ranges']['exchange_rate_usd_idr']['mean']:,.0f}</span>
+                            <span id="valueExchange" class="font-semibold text-corporate">Rp 15,469</span>
                             <span>Rp 18.000</span>
                         </div>
                     </div>
@@ -273,33 +239,33 @@ class HTMLFactory:
                 <div>
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">📊 CPI Index (IHK)</label>
-                        <input type="range" id="sliderIHK" min="105" max="120" step="0.1" value="{model_export['feature_ranges']['ihk_index']['mean']:.1f}"
+                        <input type="range" id="sliderIHK" min="105" max="120" step="0.1" value="112.4"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>105</span>
-                            <span id="valueIHK" class="font-semibold text-corporate">{model_export['feature_ranges']['ihk_index']['mean']:.1f}</span>
+                            <span id="valueIHK" class="font-semibold text-corporate">112.4</span>
                             <span>120</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">📰 News Sentiment Score</label>
-                        <input type="range" id="sliderNewsSentiment" min="-1" max="1" step="0.05" value="{model_export['feature_ranges']['news_sentiment_llm_score']['mean']:.2f}"
+                        <input type="range" id="sliderNewsSentiment" min="-1" max="1" step="0.05" value="0.05"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>😨 Panic (-1)</span>
-                            <span id="valueNewsSentiment" class="font-semibold text-corporate">{model_export['feature_ranges']['news_sentiment_llm_score']['mean']:.2f}</span>
+                            <span id="valueNewsSentiment" class="font-semibold text-corporate">0.05</span>
                             <span>😊 Optimism (+1)</span>
                         </div>
                     </div>
 
                     <div class="slider-container">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">💬 Social Media Sentiment Score</label>
-                        <input type="range" id="sliderSocialSentiment" min="-1" max="1" step="0.05" value="{model_export['feature_ranges']['social_media_sentiment_llm_score']['mean']:.2f}"
+                        <input type="range" id="sliderSocialSentiment" min="-1" max="1" step="0.05" value="-0.02"
                                oninput="updateSimulation()" class="w-full">
                         <div class="flex justify-between text-xs text-gray-500 mt-2">
                             <span>😨 Panic (-1)</span>
-                            <span id="valueSocialSentiment" class="font-semibold text-corporate">{model_export['feature_ranges']['social_media_sentiment_llm_score']['mean']:.2f}</span>
+                            <span id="valueSocialSentiment" class="font-semibold text-corporate">-0.02</span>
                             <span>😊 Optimism (+1)</span>
                         </div>
                     </div>
@@ -320,7 +286,13 @@ class HTMLFactory:
         <div class="report-section">
             <div class="report-title">Government Impact Analysis</div>
             <div class="report-text">
-{self._format_text_for_html(report['government_impact_analysis'])}
+<p class="mb-3">GOVERNMENT IMPACT ANALYSIS - MODERATE INFLATION SCENARIO</p>
+<p class="mb-3">The projected inflation rate of 3.59% falls within manageable parameters but requires careful monitoring. Current trajectory indicates stable expectations with moderate policy accommodation space.</p>
+<p class="mb-3">Fiscal Impact: Government subsidy requirements remain moderate and predictable. Budget execution becomes less volatile than high-inflation scenarios.</p>
+<p class="mb-3">Purchasing Power: Real income remains relatively stable. Wage growth expectations align with inflation, limiting labor market friction.</p>
+<p class="mb-3">Exchange Rate: Rupiah shows normal volatility patterns. No extraordinary pressure on reserves or exchange market intervention.</p>
+<p class="mb-3">Central Bank Positioning: Current BI rate maintains appropriate restrictiveness relative to inflation gap. Room exists for minor adjustments based on incoming data.</p>
+<p class="mb-3">Risk Assessment: PRIMARY RISK involves upstream inflationary pressures (global commodity volatility). SECONDARY RISK includes supply disruptions affecting specific sectors.</p>
             </div>
         </div>
         
@@ -328,7 +300,19 @@ class HTMLFactory:
         <div class="report-section">
             <div class="report-title">Strategic Policy Recommendations</div>
             <div class="report-text">
-{self._format_text_for_html(report['policy_recommendations'])}
+<p class="mb-3">STRATEGIC POLICY RECOMMENDATIONS - MODERATE INFLATION ENVIRONMENT</p>
+<p class="mb-3">IMMEDIATE (0-30 days):
+• Maintain current BI policy rate with data-dependent guidance
+• Fine-tune subsidy administration to prevent leakage
+• Monitor inflation expectations through regular surveys</p>
+<p class="mb-3">INTERMEDIATE (30-90 days):
+• Consider 12-month BI rate path based on inflation evolution
+• Implement targeted supply interventions for inflation-prone sectors
+• Strengthen fiscal consolidation discipline</p>
+<p class="mb-3">LONG-TERM (90+ days):
+• Continue structural supply reforms to improve productivity
+• Build automatic stabilizers into fiscal framework
+• Enhance real-time inflation monitoring capabilities</p>
             </div>
         </div>
         
@@ -348,23 +332,28 @@ class HTMLFactory:
     <!-- Data Embedded in Script -->
     <script>
         // Historical data for chart
-        const historicalData = {json.dumps(historical_data)};
+        const historicalData = {"dates": ["2026-05", "2026-05", "2026-05", "2026-05", "2026-05", "2026-05", "2026-06", "2026-06", "2026-06", "2026-06", "2026-06", "2026-06"], "values": [4.033355731660629, 4.033355731660629, 4.033355731660629, 4.033355731660629, 4.033355731660629, 4.033355731660629, 3.587891084524443, 3.587891084524443, 3.587891084524443, 3.587891084524443, 3.587891084524443, 3.587891084524443]};
         
         // Model export data
-        const modelExport = {json.dumps(model_export)};
+        const modelExport = {"model_type": "random_forest", "n_estimators": 100, "feature_names": ["inflation_rate", "bi_rate", "exchange_rate_usd_idr", "ihk_index", "news_sentiment_llm_score", "social_media_sentiment_llm_score"], "feature_count": 6, "feature_importances": {"inflation_rate": 0.7963037289664772, "bi_rate": 0.01910560239929372, "exchange_rate_usd_idr": 0.008291651992496983, "ihk_index": 0.019039951341714576, "news_sentiment_llm_score": 0.04143590631505054, "social_media_sentiment_llm_score": 0.11582315898496719}, "feature_importance_ranking": [{"feature": "inflation_rate", "importance": 0.7963037289664772}, {"feature": "social_media_sentiment_llm_score", "importance": 0.11582315898496719}, {"feature": "news_sentiment_llm_score", "importance": 0.04143590631505054}, {"feature": "bi_rate", "importance": 0.01910560239929372}, {"feature": "ihk_index", "importance": 0.019039951341714576}, {"feature": "exchange_rate_usd_idr", "importance": 0.008291651992496983}], "linear_approximation": {"intercept": 1.4153137668121913, "coefficients": {"inflation_rate": 0.6561935418846866, "bi_rate": -0.00536819776411961, "exchange_rate_usd_idr": -2.6965448954993164e-06, "ihk_index": -0.0006008936772101662, "news_sentiment_llm_score": -0.003605519862230569, "social_media_sentiment_llm_score": -0.022200912575668762}}, "training_metrics": {"mae": 0.1343232264861769, "rmse": 0.25551815269175226, "r2": 0.8747744478951037, "n_samples": 215, "n_features": 6}, "prediction_formula": "function predictInflation(features) {\n  let prediction = 1.415314;\n  prediction += 0.656194 * features['inflation_rate'];\n  prediction += -0.005368 * features['bi_rate'];\n  prediction += -0.000003 * features['exchange_rate_usd_idr'];\n  prediction += -0.000601 * features['ihk_index'];\n  prediction += -0.003606 * features['news_sentiment_llm_score'];\n  prediction += -0.022201 * features['social_media_sentiment_llm_score'];\n  return Math.max(0, Math.min(10, prediction));\n}", "feature_ranges": {"inflation_rate": {"min": 2.4046644612689363, "max": 5.421494538561287, "mean": 3.832445090492303, "std": 0.7219220510668676}, "bi_rate": {"min": 5.127860967579316, "max": 7.1018277017965366, "mean": 5.9547224889797965, "std": 0.4376550863076998}, "exchange_rate_usd_idr": {"min": 14881.375145386866, "max": 16042.166227974825, "mean": 15468.834275288098, "std": 293.3457187276869}, "ihk_index": {"min": 109.67928027728097, "max": 116.79756469190384, "mean": 112.38629496020795, "std": 1.7823395515142022}, "news_sentiment_llm_score": {"min": -0.19033785976074477, "max": 1.0, "mean": 0.047698428387770254, "std": 0.23720990758817373}, "social_media_sentiment_llm_score": {"min": -0.9586886466408728, "max": 1.0, "mean": -0.016651151797623612, "std": 0.21047442207301056}}};
         
         // Feature ranges for normalization
-        const featureRanges = {json.dumps(model_export['feature_ranges'])};
+        const featureRanges = {"inflation_rate": {"min": 2.4046644612689363, "max": 5.421494538561287, "mean": 3.832445090492303, "std": 0.7219220510668676}, "bi_rate": {"min": 5.127860967579316, "max": 7.1018277017965366, "mean": 5.9547224889797965, "std": 0.4376550863076998}, "exchange_rate_usd_idr": {"min": 14881.375145386866, "max": 16042.166227974825, "mean": 15468.834275288098, "std": 293.3457187276869}, "ihk_index": {"min": 109.67928027728097, "max": 116.79756469190384, "mean": 112.38629496020795, "std": 1.7823395515142022}, "news_sentiment_llm_score": {"min": -0.19033785976074477, "max": 1.0, "mean": 0.047698428387770254, "std": 0.23720990758817373}, "social_media_sentiment_llm_score": {"min": -0.9586886466408728, "max": 1.0, "mean": -0.016651151797623612, "std": 0.21047442207301056}};
         
         // Prediction function (extracted from model)
-        function predictInflation(features) {{
-            let prediction = {model_export['linear_approximation']['intercept']};
-{self._render_js_coefficients(model_export['linear_approximation']['coefficients'])}
+        function predictInflation(features) {
+            let prediction = 1.4153137668121913;
+            prediction += 0.656194 * features['inflation_rate'];
+            prediction += -0.005368 * features['bi_rate'];
+            prediction += -0.000003 * features['exchange_rate_usd_idr'];
+            prediction += -0.000601 * features['ihk_index'];
+            prediction += -0.003606 * features['news_sentiment_llm_score'];
+            prediction += -0.022201 * features['social_media_sentiment_llm_score'];
             return Math.max(0, Math.min(10, prediction));
-        }}
+        }
         
         // Slider update handler - uses all 6 model features
-        function updateSimulation() {{
+        function updateSimulation() {
             const inflationRate = parseFloat(document.getElementById('sliderInflation').value);
             const biRate = parseFloat(document.getElementById('sliderBIRate').value);
             const exchangeRate = parseFloat(document.getElementById('sliderExchange').value);
@@ -381,14 +370,14 @@ class HTMLFactory:
             document.getElementById('valueSocialSentiment').textContent = socialSentiment.toFixed(2);
 
             // Create feature vector using all 6 features (same order as model)
-            const features = {{
+            const features = {
                 'inflation_rate': inflationRate,
                 'bi_rate': biRate,
                 'exchange_rate_usd_idr': exchangeRate,
                 'ihk_index': ihkIndex,
                 'news_sentiment_llm_score': newsSentiment,
                 'social_media_sentiment_llm_score': socialSentiment
-            }};
+            };
             
             // Predict
             const simulatedInflation = predictInflation(features);
@@ -398,25 +387,25 @@ class HTMLFactory:
             badge.textContent = simulatedInflation.toFixed(2) + '%';
             
             // Color coding
-            if (simulatedInflation < 2.5) {{
+            if (simulatedInflation < 2.5) {
                 badge.style.color = '#065f46';
                 badge.style.backgroundColor = '#ecfdf5';
-            }} else if (simulatedInflation < 4.0) {{
+            } else if (simulatedInflation < 4.0) {
                 badge.style.color = '#78350f';
                 badge.style.backgroundColor = '#fefce8';
-            }} else {{
+            } else {
                 badge.style.color = '#7f1d1d';
                 badge.style.backgroundColor = '#fef2f2';
-            }}
-        }}
+            }
+        }
         
         // Initialize charts when page loads
-        window.addEventListener('load', function() {{
+        window.addEventListener('load', function() {
             initializeCharts();
             updateSimulation();
-        }});
+        });
         
-        function initializeCharts() {{
+        function initializeCharts() {
             // Inflation historical vs predicted chart
             const ctx1 = document.getElementById('inflationChart').getContext('2d');
             const dates = historicalData.dates;
@@ -424,14 +413,14 @@ class HTMLFactory:
             
             // Add prediction point
             dates.push(dates[dates.length - 1] + ' (Pred)');
-            inflationValues.push({prediction});
+            inflationValues.push(3.586948202407244);
             
-            new Chart(ctx1, {{
+            new Chart(ctx1, {
                 type: 'line',
-                data: {{
+                data: {
                     labels: dates,
                     datasets: [
-                        {{
+                        {
                             label: 'Historical Inflation',
                             data: inflationValues.slice(0, -1),
                             borderColor: '#3b82f6',
@@ -442,226 +431,74 @@ class HTMLFactory:
                             pointRadius: 4,
                             pointHoverRadius: 6,
                             pointBackgroundColor: '#3b82f6'
-                        }},
-                        {{
+                        },
+                        {
                             label: 'Predicted Inflation',
-                            data: Array(inflationValues.length - 2).fill(null).concat([inflationValues[inflationValues.length - 2], {prediction}]),
+                            data: Array(inflationValues.length - 2).fill(null).concat([inflationValues[inflationValues.length - 2], 3.586948202407244]),
                             borderColor: '#ef4444',
                             borderDash: [5, 5],
                             borderWidth: 2,
                             pointRadius: 5,
                             pointBackgroundColor: '#ef4444'
-                        }}
+                        }
                     ]
-                }},
-                options: {{
+                },
+                options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {{
-                        legend: {{
+                    plugins: {
+                        legend: {
                             display: true,
                             position: 'top'
-                        }}
-                    }},
-                    scales: {{
-                        y: {{
+                        }
+                    },
+                    scales: {
+                        y: {
                             beginAtZero: true,
                             max: 8,
-                            title: {{
+                            title: {
                                 display: true,
                                 text: 'Inflation Rate (%)'
-                            }}
-                        }}
-                    }}
-                }}
-            }});
+                            }
+                        }
+                    }
+                }
+            });
             
             // Feature importance chart
             const ctx2 = document.getElementById('featureImportanceChart').getContext('2d');
             const featureNames = modelExport.feature_importance_ranking.map(f => f.feature.replace(/_/g, ' '));
             const importances = modelExport.feature_importance_ranking.map(f => (f.importance * 100).toFixed(1));
             
-            new Chart(ctx2, {{
+            new Chart(ctx2, {
                 type: 'barHorizontal',
-                data: {{
+                data: {
                     labels: featureNames,
                     datasets: [
-                        {{
+                        {
                             label: 'Feature Importance (%)',
                             data: importances,
                             backgroundColor: ['#1e3a8a', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe', '#dbeafe'],
                             borderRadius: 6
-                        }}
+                        }
                     ]
-                }},
-                options: {{
+                },
+                options: {
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {{
-                        legend: {{ display: false }}
-                    }},
-                    scales: {{
-                        x: {{
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
                             beginAtZero: true,
                             max: 100
-                        }}
-                    }}
-                }}
-            }});
-        }}
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </body>
-</html>"""
-        
-        return html
-    
-    def _get_color_for_value(self, value: float) -> str:
-        """Get text color based on inflation value."""
-        if value < 2.5:
-            return "#065f46"
-        elif value < 4.0:
-            return "#78350f"
-        else:
-            return "#7f1d1d"
-    
-    def _get_bg_color_for_value(self, value: float) -> str:
-        """Get background color based on inflation value."""
-        if value < 2.5:
-            return "#ecfdf5"  # Light green
-        elif value < 4.0:
-            return "#fefce8"  # Light yellow
-        else:
-            return "#fef2f2"  # Light red
-    
-    def _render_importance_list(self, importance_ranking: list) -> str:
-        """Render feature importance list as HTML."""
-        html_items = []
-        for i, item in enumerate(importance_ranking[:6], 1):
-            feature_name = item['feature'].replace('_', ' ').title()
-            importance_pct = item['importance'] * 100
-            html_items.append(f"<li>{i}. <strong>{feature_name}</strong>: {importance_pct:.1f}%</li>")
-        return "\n".join(html_items)
-    
-    def _render_js_coefficients(self, coefficients: Dict[str, float]) -> str:
-        """Render coefficients as JavaScript lines."""
-        lines = []
-        for fname, coef in coefficients.items():
-            js_var = fname.lower().replace(' ', '_')
-            lines.append(f"            prediction += {coef:.6f} * features['{js_var}'];")
-        return "\n".join(lines)
-    
-    def _format_text_for_html(self, text: str) -> str:
-        """Convert text to HTML paragraphs, preserving structure."""
-        # Split by double newlines for paragraphs
-        paragraphs = text.split('\n\n')
-        html_paragraphs = []
-        
-        for para in paragraphs:
-            # Check if paragraph starts with bullet or number
-            if para.strip().startswith('•') or para.strip().startswith('-'):
-                # Convert to HTML list
-                items = [line.strip().lstrip('•').lstrip('-').strip() 
-                        for line in para.split('\n') if line.strip()]
-                html_paragraphs.append('<ul class="list-disc list-inside space-y-2">')
-                for item in items:
-                    html_paragraphs.append(f'<li>{item}</li>')
-                html_paragraphs.append('</ul>')
-            elif para.strip() and any(para.strip()[0].isdigit() and para.strip()[1] in '.):' 
-                                    for _ in [None]):
-                # Numbered list
-                items = [line.strip() for line in para.split('\n') 
-                        if line.strip() and not line.strip()[0].isdigit()]
-                if items:
-                    html_paragraphs.append('<ol class="list-decimal list-inside space-y-2">')
-                    for item in items:
-                        html_paragraphs.append(f'<li>{item}</li>')
-                    html_paragraphs.append('</ol>')
-            elif para.strip():
-                html_paragraphs.append(f'<p class="mb-3">{para.strip()}</p>')
-        
-        return '\n'.join(html_paragraphs)
-
-
-class HTMLFactoryPipeline:
-    """Orchestrates HTML generation."""
-    
-    def generate_dashboard(self, prediction: float, enriched_df, 
-                          model_data: Dict, report: Dict, 
-                          output_path: str = "index.html"):
-        """
-        Generate and save complete dashboard.
-        
-        Args:
-            prediction: Predicted inflation
-            enriched_df: Dataset
-            model_data: Model export dictionary
-            report: Government report
-            output_path: Where to save HTML
-        """
-        logger.info("=" * 60)
-        logger.info("PHASE 5: GENERATING STANDALONE HTML DASHBOARD")
-        logger.info("=" * 60)
-        
-        # Prepare historical data for chart
-        recent_inflation = enriched_df['inflation_rate'].tail(12)
-        historical_data = {
-            'dates': [d.strftime('%Y-%m') for d in recent_inflation.index],
-            'values': recent_inflation.values.tolist()
-        }
-        
-        # Generate HTML
-        factory = HTMLFactory()
-        html_content = factory.generate_html(
-            prediction,
-            historical_data,
-            model_data,
-            report
-        )
-        
-        # Save to file
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(html_content)
-        
-        logger.info(f"Dashboard generated successfully: {output_path}")
-        logger.info(f"File size: {len(html_content) / 1024:.1f} KB")
-        
-        return output_path
-
-
-if __name__ == "__main__":
-    from data_ingestion import DataPipeline
-    from llm_sentiment_pipeline import SentimentPipeline
-    from model_training import ModelTrainingPipeline
-    from llm_government_insights import InsightsPipeline
-    
-    # Load and process data
-    data_pipeline = DataPipeline(months=36)
-    unified_df, news_df, social_df = data_pipeline.build_unified_dataset()
-    
-    sentiment_pipeline = SentimentPipeline(backend="mock")
-    enriched_df = sentiment_pipeline.process_dataset(unified_df, news_df, social_df)
-    
-    model_pipeline = ModelTrainingPipeline()
-    trained_model, model_data = model_pipeline.train_and_export(enriched_df)
-    
-    # Generate prediction
-    X_sample = enriched_df[trained_model.FEATURE_NAMES].iloc[-1:].values
-    prediction = trained_model.predict(X_sample)[0]
-    
-    # Generate report
-    insights_pipeline = InsightsPipeline(backend="mock")
-    report = insights_pipeline.generate_report(prediction, model_data, enriched_df)
-    
-    # Generate dashboard
-    html_pipeline = HTMLFactoryPipeline()
-    output_file = html_pipeline.generate_dashboard(
-        prediction,
-        enriched_df,
-        model_data,
-        report,
-        output_path="index.html"
-    )
-    
-    print(f"\n✓ Dashboard generated: {output_file}")
-    print("Open in web browser to interact with simulation!")
+</html>
